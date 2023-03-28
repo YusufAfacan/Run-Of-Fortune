@@ -10,7 +10,7 @@ public class LevelLoader : MonoBehaviour
 
     public event EventHandler OnRestartScene;
 
-
+    private AdManager adManager;
 
     private void Awake()
     {
@@ -22,31 +22,47 @@ public class LevelLoader : MonoBehaviour
         Player.Instance.OnVictory += Player_OnVictory;
         Player.Instance.OnDie += Player_OnDie;
         Boss.Instance.OnBossVictory += Boss_OnBossVictory;
+        adManager = FindObjectOfType<AdManager>();
+
+
     }
 
     private void Player_OnDie(object sender, EventArgs e)
     {
-        Invoke(nameof(RestartScene), 3f);
+        Invoke(nameof(ShowAd), 3f);
     }
 
     private void Boss_OnBossVictory(object sender, EventArgs e)
     {
-        Invoke(nameof(RestartScene), 3f);
+        Invoke(nameof(ShowAd), 3f);
     }
 
     private void Player_OnVictory(object sender, System.EventArgs e)
     {
-        Invoke(nameof(LoadNextScene), 3f);
+        Invoke(nameof(ShowAd), 3f);
     }
 
-    private void RestartScene()
+    public void RestartScene()
     {
+        
         Player.Instance.gameObject.SetActive(true);
         OnRestartScene?.Invoke(this, EventArgs.Empty);
+        
+
     }
 
-    private void LoadNextScene()
+    public void LoadNextScene()
     {
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+    }
+
+
+
+
+    private void ShowAd()
+    {
+        adManager.ShowAd();
     }
 }
