@@ -18,6 +18,7 @@ TagManager:
   - AttackGate
   - Plate
   - RotatingSaw
+  - Heart
   layers:
   - Default
   - TransparentFX

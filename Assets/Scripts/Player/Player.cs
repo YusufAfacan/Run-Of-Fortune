@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private const string IS_ENEMY_ALIVE = "IsEnemyAlive";
     private const string SLASH = "Slash";
     private const string CRIT = "Crit";
+    private const string HEART = "Heart";
 
     [SerializeField] private PickerWheel wheel;
     
@@ -83,6 +84,12 @@ public class Player : MonoBehaviour
         if (other.gameObject.GetComponent<Boss>())
         {
             EngageBossFight();
+        }
+
+        if (other.gameObject.CompareTag(HEART))
+        {
+            RestoreHealth(5);
+            other.gameObject.SetActive(false);
         }
     }
 
