@@ -121,10 +121,9 @@ namespace EasyUI.PickerWheelUI {
       public void Spin () {
          if (!_isSpinning) {
             _isSpinning = true ;
-            if (onSpinStartEvent != null)
-               onSpinStartEvent.Invoke () ;
+                onSpinStartEvent?.Invoke();
 
-            int index = GetRandomPieceIndex () ;
+                int index = GetRandomPieceIndex () ;
             WheelPiece piece = wheelPieces [ index ] ;
 
             if (piece.Chance == 0 && nonZeroChancesIndices.Count != 0) {
@@ -138,8 +137,10 @@ namespace EasyUI.PickerWheelUI {
             float leftOffset = (angle + halfPieceAngleWithPaddings) % 360 ;
 
             float randomAngle = Random.Range (leftOffset, rightOffset) ;
+                
 
             Vector3 targetRotation = Vector3.back * (randomAngle + 2 * 360 * spinDuration) ;
+                
 
             //float prevAngle = wheelCircle.eulerAngles.z + halfPieceAngle ;
             float prevAngle, currentAngle ;
@@ -148,7 +149,7 @@ namespace EasyUI.PickerWheelUI {
             bool isIndicatorOnTheLine = false ;
 
             wheelCircle
-            .DORotate (targetRotation, spinDuration, RotateMode.Fast)
+            .DORotate (targetRotation, spinDuration, RotateMode.FastBeyond360)
             .SetEase (Ease.InOutQuart)
             .OnUpdate (() => {
                float diff = Mathf.Abs (prevAngle - currentAngle) ;
@@ -163,10 +164,9 @@ namespace EasyUI.PickerWheelUI {
             })
             .OnComplete (() => {
                _isSpinning = false ;
-               if (onSpinEndEvent != null)
-                  onSpinEndEvent.Invoke (piece) ;
+                onSpinEndEvent?.Invoke(piece);
 
-               onSpinStartEvent = null ; 
+                onSpinStartEvent = null ; 
                onSpinEndEvent = null ;
             }) ;
 

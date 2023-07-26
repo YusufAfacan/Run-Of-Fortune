@@ -9,7 +9,14 @@ public class HealthGate : Gate
         neighbourGate = transform.parent.GetComponentInChildren<AttackGate>();
         value = UnityEngine.Random.Range(minValue, maxValue);
         text.text = value.ToString();
+        LevelLoader.Instance.OnRestartScene += Instance_OnRestartScene;
     }
+
+    private void Instance_OnRestartScene(object sender, EventArgs e)
+    {
+        isGranted = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Player>() == true && isGranted == false)

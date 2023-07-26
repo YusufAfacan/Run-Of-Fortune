@@ -9,6 +9,7 @@ public class LevelLoader : MonoBehaviour
     public static LevelLoader Instance;
 
     public event EventHandler OnRestartScene;
+    public event EventHandler OnLoadNextScene;
 
     private AdManager adManager;
 
@@ -55,7 +56,8 @@ public class LevelLoader : MonoBehaviour
     {
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
+        OnLoadNextScene?.Invoke(this, EventArgs.Empty);
+
     }
 
 

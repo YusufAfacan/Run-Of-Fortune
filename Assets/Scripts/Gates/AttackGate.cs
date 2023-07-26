@@ -9,9 +9,15 @@ public class AttackGate : Gate
         neighbourGate = transform.parent.GetComponentInChildren<HealthGate>();
         value = Random.Range(minValue, maxValue);
         text.text = value.ToString();
-
+        LevelLoader.Instance.OnRestartScene += Instance_OnRestartScene;
 
     }
+
+    private void Instance_OnRestartScene(object sender, System.EventArgs e)
+    {
+        isGranted = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Player>() == true && isGranted == false)
